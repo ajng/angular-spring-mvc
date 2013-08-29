@@ -1,0 +1,15 @@
+<div class="auth-layout">
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="brand" href="#">Authentication</a>
+                <ul class="nav">
+                    <li ng-class="{ active: $state.includes('home') }"><a ui-sref="home">Home</a></li>
+                    <li ng-class="{ active: $state.includes('login') }"><a ui-sref="login">Login</a></li>
+                    <li ng-class="{ active: $state.includes('add-user') }"><a  ui-sref="add-user">Add User</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container content" ng-hide="loadingState" ui-view ng-animate="{enter:'fade-enter'}"></div>
+</div>

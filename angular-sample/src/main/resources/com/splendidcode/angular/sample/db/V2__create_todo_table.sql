@@ -1,0 +1,7 @@
+CREATE TABLE PUBLIC.todos
+(
+  id UUID PRIMARY KEY NOT NULL,
+  username VARCHAR(100),
+  text VARCHAR(100),
+  done BOOLEAN  NOT NULL
+);

@@ -1,0 +1,29 @@
+$iconSpritePath:          "../ui/lib/bootstrap/img/glyphicons-halflings.png" !default;
+$iconWhiteSpritePath:     "../ui/lib/bootstrap/img/glyphicons-halflings-white.png" !default;
+
+//Span Fix for Semantic Bootstrap
+@for $i from 1 through 12 {
+  .span#{$i} {
+    @extend [class^="span"] !optional;
+    @extend [class*="span"] !optional;
+  }
+}
+
+.icon{
+  @extend [class^="icon"] !optional;
+  @extend [class*="icon-"] !optional;
+}
+
+@import "lib/bootstrap/lib/bootstrap";
+
+@import "layout/default/_layout";
+@import "layout/authentication/_auth-layout";
+@import "home/home";
+@import "todo/todo";
+@import "login/login";
+@import "animations/_animations";
+
+
+button{
+  @extend .btn;
+}

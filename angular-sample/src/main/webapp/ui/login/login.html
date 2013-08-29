@@ -1,0 +1,9 @@
+<div class="login-page">
+    <form ng-submit="authenticate()">
+        <input type="text" placeholder="Username" ng-model="model.username"/>
+        <input type="password" placeholder="Password" ng-model="model.password"/>
+        <button  type="submit">Login</button>
+
+        <div ng-show="loginFailed" class="alert">LOGIN FAILED</div>
+    </form>
+</div>

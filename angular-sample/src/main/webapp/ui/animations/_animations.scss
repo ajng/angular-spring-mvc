@@ -1,0 +1,15 @@
+$fadeTime:  0.5s;
+.fade-enter{
+  -webkit-transition: $fadeTime linear all; /* Safari/Chrome */
+  -moz-transition: $fadeTime linear all; /* Firefox */
+  -o-transition: $fadeTime linear all; /* Opera */
+  transition: $fadeTime linear all; /* IE10+ and Future Browsers */
+
+  /* The animation preparation code */
+  opacity: 0;
+}
+
+.fade-enter.fade-enter-active{
+  opacity: 1;
+}
+

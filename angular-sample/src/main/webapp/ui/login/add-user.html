@@ -1,0 +1,39 @@
+<div class='add-user'>
+    
+    <form ng-submit="createUser()">
+       <div>
+          <label for="username">Username:</label> 
+          <div>
+              <input type="text" id="username" placeholder="Username" ng-model="model.username" required>
+          </div>
+       </div>
+        <div>
+            <label for="password">Password:</label>
+            <div>
+                <input type="text" id="password" placeholder="Password" ng-model="model.password" required>
+            </div>
+        </div>
+        <div>
+            <label for="confirmPassword">Confirm Password:</label>
+            <div>
+                <input type="text" id="confirmPassword" placeholder="Confirm Password" ng-model="model.confirmPassword" required>
+            </div>
+        </div> 
+        
+        <div>
+            <div class="controls">
+             <button type="submit">Create User</button>
+            </div>
+        </div>
+        
+        
+    </form>
+    
+    <div ng-show="message.hasMessage" class="alert alert-{{ message.type}}">{{ message.text }}</div>
+    
+</div>
+        
+        
+        
+        
+

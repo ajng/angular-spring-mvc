@@ -1,0 +1,33 @@
+.login-page{
+  
+  form {
+    @extend .form-inline;
+  }
+  
+  button{
+    @extend .btn;
+  }
+
+}
+
+.add-user{
+ form {
+   @extend .form-horizontal;
+   
+   & > div {
+     @extend .control-group;
+   }
+   
+   label {
+     @extend .control-label;
+   }
+   
+   label + div {
+     @extend .controls;
+   }
+   
+   button{
+     @extend .btn;
+   }
+ } 
+}

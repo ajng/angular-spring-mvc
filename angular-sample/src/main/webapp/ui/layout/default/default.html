@@ -1,0 +1,18 @@
+<div class="default-layout">
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="brand" href="#">Angular Sample</a>
+                <ul class="nav">
+                    <li ng-class="{ active: $state.includes('home') }"><a ui-sref="home">Home</a></li>
+                    <li ng-class="{ active: $state.includes('todos') }"><a ui-sref="todos">Todos</a></li>
+                    <li><a href="" ng-click="logout()">Logout</a></li>
+                </ul>
+                <p class="navbar-text pull-right" ui-view="hint"></p>
+            </div>
+        </div>
+    </div>
+    <div class="container content" ng-hide="loadingState" ui-view ng-animate="{enter:'fade-enter'}"></div>
+    <div class="alert-success" ng-show="loadingState">LOADING................</div>
+</div>
+        

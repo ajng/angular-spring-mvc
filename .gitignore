@@ -1,0 +1,16 @@
+target
+build
+.project
+.settings
+.classpath
+.idea
+.sass-cache
+*.iml
+*.swp
+.externalToolBuilders
+.orig
+/**/.idea/workspace.xml
+/.idea/workspace.xml
+.idea/dictionaries
+atlassian-ide-plugin.xml
+
