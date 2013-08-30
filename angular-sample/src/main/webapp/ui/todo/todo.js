@@ -55,9 +55,14 @@ define(['text!./todo.html', 'layout/default/default-layout', 'lib/lodash'], func
 		};
 
 		$scope.updateTodo = function(todo) {
-			todo.put().then(function(updatedTodo){
-				_.extend(todo, updatedTodo);		
-			});
+			function onTodoUpdated(updatedTodo){
+				_.extend(todo, updatedTodo);
+			}
+			
+			function onUpdateFailed(){
+				model.error = "Failed to update todo itemm in server";
+			}
+			todo.put().then(onTodoUpdated, onUpdateFailed);
 		};
 		
 		function restangularizeTodoList(todos){

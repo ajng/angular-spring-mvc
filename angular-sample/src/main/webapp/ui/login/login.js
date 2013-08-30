@@ -1,8 +1,8 @@
 'use strict';
 define(['text!./login.html', 'layout/authentication/auth-layout' ,'./authentication'], function(template, layout) {
 
-	 loginController.$inject = ["$scope", "$http", "$state", "Restangular", "authenticationService"];
-	 function loginController($scope, $http, $state, Restangular, authenticationService) {
+	 loginController.$inject = ["$scope", "$http", "authenticationService"];
+	 function loginController($scope, $http, authenticationService) {
 		 var model = $scope.model = {
 			 username : "",
 			 password : ""

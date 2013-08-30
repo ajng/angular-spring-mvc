@@ -1,5 +1,5 @@
 'use strict';
-define(['angular'], function(angular) {
+define(['angular', 'angular/ui-router'], function(angular) {
 
 
 	routeToLoginOnAuthFail.$inject = ['$q', 'authenticationService']
@@ -54,7 +54,7 @@ define(['angular'], function(angular) {
 			}
 		}
 	}]);
-
+	
 	module.config(['$httpProvider', function($httpProvider) {
 		$httpProvider.responseInterceptors.push(routeToLoginOnAuthFail);
 	}]);
