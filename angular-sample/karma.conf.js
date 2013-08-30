@@ -27,7 +27,9 @@ module.exports = function(config) {
     ],
 	  
 	  
-	preprocessors : [],
+	preprocessors : {
+		'src/main/webapp/ui/!(lib)/**/*.js': 'coverage'
+	},
 
 
     // test results reporter to use
