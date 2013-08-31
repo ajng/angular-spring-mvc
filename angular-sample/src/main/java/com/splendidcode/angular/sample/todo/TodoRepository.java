@@ -31,7 +31,7 @@ public class TodoRepository {
          }
       };
 
-      return jdbcTemplate.query("SELECT id, text, done FROM todos WHERE username = :username", params, new BeanPropertyRowMapper(Todo.class));
+      return jdbcTemplate.query("SELECT id, text, done, username FROM todos WHERE username = :username", params, new BeanPropertyRowMapper(Todo.class));
    }
 
    private String getCurrentUsername() {
@@ -43,6 +43,16 @@ public class TodoRepository {
       todo.setUsername(getCurrentUsername());
       jdbcTemplate.update("INSERT INTO todos (id, text, done, username) VALUES (:id, :text, :done, :username)", new BeanPropertySqlParameterSource(todo));
       return todo;
+   }
+
+   public Todo getTodo(final UUID id) {
+      HashMap<String, Object> params = new HashMap<String, Object>() {
+         {
+            put("id", id);
+            put("username", getCurrentUsername());
+         }
+      };
+      return jdbcTemplate.queryForObject("SELECT id, text, username, done FROM todos WHERE username = :username AND id=:id", params, new BeanPropertyRowMapper<Todo>(Todo.class));
    }
 
    public Todo updateTodo(UUID id, Todo todo) {

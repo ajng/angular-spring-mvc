@@ -22,11 +22,15 @@ public class UserAuthenticationService implements AuthenticationListener {
 
    private final AuthInfoRepository authInfoRepository;
    private final Pbkdf2Utils hasher;
+   private final AuthInfoFactory authInfoFactory;
+   private final HashSecurityUpdater hashSecurityUpdater;
 
    @Inject
-   public UserAuthenticationService(AuthInfoRepository authInfoRepository, Pbkdf2Utils hasher) {
+   public UserAuthenticationService(AuthInfoRepository authInfoRepository, Pbkdf2Utils hasher, AuthInfoFactory authInfoFactory, HashSecurityUpdater hashSecurityUpdater) {
       this.authInfoRepository = authInfoRepository;
       this.hasher = hasher;
+      this.authInfoFactory = authInfoFactory;
+      this.hashSecurityUpdater = hashSecurityUpdater;
    }
 
 
@@ -43,37 +47,13 @@ public class UserAuthenticationService implements AuthenticationListener {
    }
 
    public void createUser(LoginRequest loginRequest) {
-      AuthInfo authInfo = newAuthInfoFromUsernameAndPassword(loginRequest.getUsername(), loginRequest.getPassword().toCharArray());
+      AuthInfo authInfo = authInfoFactory.createAuthInfo(loginRequest.getUsername(), loginRequest.getPassword());
       authInfoRepository.add(authInfo);
    }
 
-
    @Override
    public void onSuccess(AuthenticationToken genericToken, AuthenticationInfo authenticationInfo) {
-      UsernamePasswordToken token = (UsernamePasswordToken)genericToken;
-      AuthInfo authInfo = (AuthInfo)authenticationInfo.getCredentials();
-      if(shouldUpdateHashSecurity(authInfo)) {
-         updateAuthInfo(token.getUsername(), token.getPassword());
-      }
-   }
-
-
-   private void updateAuthInfo(String username, char[] password) {
-      AuthInfo authInfo = newAuthInfoFromUsernameAndPassword(username, password);
-      authInfoRepository.update(authInfo);
-   }
-
-   private AuthInfo newAuthInfoFromUsernameAndPassword(String username, char[] password) {
-      byte[] salt = hasher.generateRandomSalt();
-      byte[] hash = hasher.calculateHash(password, salt);
-      return new AuthInfo(username, hash, salt, hasher.getDefaultIterations());
-   }
-
-   private boolean shouldUpdateHashSecurity(AuthInfo authInfo) {
-      boolean iterationsChanged = authInfo.getIterations() != hasher.getDefaultIterations();
-      boolean hashBytesChanged = authInfo.getHashBytes().length != hasher.getDefaultHashLength();
-      boolean saltLengthChanged = authInfo.getSaltBytes().length != hasher.getDefaultSaltLength();
-      return iterationsChanged || hashBytesChanged || saltLengthChanged;
+      hashSecurityUpdater.updateAuthInfoIfNecessary(genericToken, authenticationInfo);
    }
 
    @Override

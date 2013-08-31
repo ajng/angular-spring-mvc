@@ -1,25 +1,25 @@
 package com.splendidcode.angular.sample.login;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
+import javax.inject.Inject;
 import java.security.SecureRandom;
 
 @Component
 public class Pbkdf2Utils {
-   @Value("${sample.security.password_hash_iterations: 10000}")
-   private int PASSWORD_HASH_ITERATIONS;
 
-   @Value("${sample.security.password_salt_bytes: 24}")
-   private int PASSWORD_SALT_BYTES;
 
-   @Value("${sample.security.password_hash_bytes: 24}")
-   private int PASSWORD_HASH_BYTES;
+   private final Pbkdf2UtilOptions options;
+
+   @Inject
+   public Pbkdf2Utils(Pbkdf2UtilOptions options) {
+      this.options = options;
+   }
 
    public byte[] calculateHash(char[] password, byte[] salt) {
-      return calculateHash(password, salt, PASSWORD_HASH_ITERATIONS, PASSWORD_HASH_BYTES);
+      return calculateHash(password, salt, options.getPasswordHashIterations(), options.getPasswordHashBytes());
    }
 
    public byte[] calculateHash(char[] password, byte[] salt, int iterations, int hashSize) {
@@ -31,7 +31,7 @@ public class Pbkdf2Utils {
          throw new RuntimeException("Error calculating hash for user", e);
       }
    }
-   
+
    public boolean constantTimeCompare(byte[] submitted, byte[] actual) {
       int differenceFound = submitted.length ^ actual.length;
       for(int i = 0; i < submitted.length && i < actual.length; i++) {
@@ -39,25 +39,11 @@ public class Pbkdf2Utils {
       }
       return differenceFound == 0;
    }
-   
+
    public byte[] generateRandomSalt() {
       SecureRandom random = new SecureRandom();
-      byte[] salt = new byte[PASSWORD_SALT_BYTES];
+      byte[] salt = new byte[options.getPasswordSaltBytes()];
       random.nextBytes(salt);
       return salt;
-   }
-
-
-
-   public int getDefaultIterations() {
-      return PASSWORD_HASH_ITERATIONS;
-   }
-
-   public int getDefaultHashLength() {
-      return PASSWORD_HASH_BYTES;
-   }
-
-   public int getDefaultSaltLength() {
-      return PASSWORD_SALT_BYTES;
    }
 }
