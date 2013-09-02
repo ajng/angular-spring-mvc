@@ -1,0 +1,10 @@
+{
+  "name": "angualrjs-spring-mvc",
+   "description": "A spring mvc starter project for angular js",
+   "devDependencies": {
+     "karma" : "0.10.2",
+     "karma-junit-reporter" : "0.1.0",    
+     "karma-coverage" : "0.1.0",
+     "karma-chrome-launcher" : "0.1.0"
+   }
+}
