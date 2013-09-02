@@ -1,5 +1,7 @@
 package com.splendidcode.angular.sample.login;
 
+import com.splendidcode.angular.sample.login.hashing.Pbkdf2Options;
+import com.splendidcode.angular.sample.login.hashing.Pbkdf2Utils;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -8,10 +10,10 @@ import javax.inject.Inject;
 public class AuthInfoFactory {
 
    private final Pbkdf2Utils hasher;
-   private final Pbkdf2UtilOptions options;
+   private final Pbkdf2Options options;
 
    @Inject
-   public AuthInfoFactory(Pbkdf2Utils hasher, Pbkdf2UtilOptions options) {
+   public AuthInfoFactory(Pbkdf2Utils hasher, Pbkdf2Options options) {
       this.hasher = hasher;
       this.options = options;
    }

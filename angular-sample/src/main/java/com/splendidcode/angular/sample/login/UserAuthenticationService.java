@@ -1,5 +1,6 @@
 package com.splendidcode.angular.sample.login;
 
+import com.splendidcode.angular.sample.login.hashing.HashSecurityUpdater;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -21,14 +22,12 @@ public class UserAuthenticationService implements AuthenticationListener {
 
 
    private final AuthInfoRepository authInfoRepository;
-   private final Pbkdf2Utils hasher;
    private final AuthInfoFactory authInfoFactory;
    private final HashSecurityUpdater hashSecurityUpdater;
 
    @Inject
-   public UserAuthenticationService(AuthInfoRepository authInfoRepository, Pbkdf2Utils hasher, AuthInfoFactory authInfoFactory, HashSecurityUpdater hashSecurityUpdater) {
+   public UserAuthenticationService(AuthInfoRepository authInfoRepository, AuthInfoFactory authInfoFactory, HashSecurityUpdater hashSecurityUpdater) {
       this.authInfoRepository = authInfoRepository;
-      this.hasher = hasher;
       this.authInfoFactory = authInfoFactory;
       this.hashSecurityUpdater = hashSecurityUpdater;
    }

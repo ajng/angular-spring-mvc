@@ -1,7 +1,7 @@
 package com.splendidcode.angular.sample.login.Shiro;
 
 import com.splendidcode.angular.sample.login.AuthInfo;
-import com.splendidcode.angular.sample.login.Pbkdf2Utils;
+import com.splendidcode.angular.sample.login.hashing.Pbkdf2Utils;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;

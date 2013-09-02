@@ -1,5 +1,8 @@
-package com.splendidcode.angular.sample.login;
+package com.splendidcode.angular.sample.login.hashing;
 
+import com.splendidcode.angular.sample.login.AuthInfo;
+import com.splendidcode.angular.sample.login.AuthInfoFactory;
+import com.splendidcode.angular.sample.login.AuthInfoRepository;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -11,16 +14,17 @@ import javax.inject.Inject;
 public class HashSecurityUpdater {
 
 
-   private final Pbkdf2UtilOptions hasherOptions;
+   private final Pbkdf2Options hasherOptions;
    private final AuthInfoFactory authInfoFactory;
    private final AuthInfoRepository authInfoRepository;
 
    @Inject
-   public HashSecurityUpdater(Pbkdf2UtilOptions hasherOptions, AuthInfoFactory authInfoFactory, AuthInfoRepository authInfoRepository) {
+   public HashSecurityUpdater(Pbkdf2Options hasherOptions, AuthInfoFactory authInfoFactory, AuthInfoRepository authInfoRepository) {
       this.hasherOptions = hasherOptions;
       this.authInfoFactory = authInfoFactory;
       this.authInfoRepository = authInfoRepository;
    }
+
 
    public void updateAuthInfoIfNecessary(AuthenticationToken genericToken, AuthenticationInfo authenticationInfo) {
       UsernamePasswordToken token = (UsernamePasswordToken)genericToken;
@@ -36,10 +40,8 @@ public class HashSecurityUpdater {
    }
 
    private boolean shouldUpdateHashSecurity(AuthInfo authInfo) {
-      boolean iterationsChanged = authInfo.getIterations() != hasherOptions.getPasswordHashIterations();
-      boolean hashBytesChanged = authInfo.getHashBytes().length != hasherOptions.getPasswordHashBytes();
-      boolean saltLengthChanged = authInfo.getSaltBytes().length != hasherOptions.getPasswordSaltBytes();
-      return iterationsChanged || hashBytesChanged || saltLengthChanged;
+      Pbkdf2Options newOptions = Pbkdf2Options.copyFrom(authInfo);
+      return !newOptions.equals(hasherOptions);
    }
 
 }

@@ -1,4 +1,4 @@
-package com.splendidcode.angular.sample.login;
+package com.splendidcode.angular.sample.login.hashing;
 
 import org.springframework.stereotype.Component;
 
@@ -11,10 +11,10 @@ import java.security.SecureRandom;
 public class Pbkdf2Utils {
 
 
-   private final Pbkdf2UtilOptions options;
+   private final Pbkdf2Options options;
 
    @Inject
-   public Pbkdf2Utils(Pbkdf2UtilOptions options) {
+   public Pbkdf2Utils(Pbkdf2Options options) {
       this.options = options;
    }
 
